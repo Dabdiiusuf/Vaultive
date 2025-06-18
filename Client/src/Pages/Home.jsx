@@ -7,8 +7,16 @@ import { AuthContext } from "../Providers/AuthContext";
 const Home = () => {
   return (
     <div className="w-full min-h-screen bg-gray-900">
-      <div className="flex flex-col justify-center items-center min-h-screen">
-        <div className="w-[80%] h-full flex justify-between items-center mb-20">
+      <div className="relative flex flex-col justify-center items-center min-h-screen">
+        <div className="absolute inset-0 z-0 grid grid-cols-5 grid-rows-5">
+          {Array.from({ length: 25 }).map((_, i) => (
+            <div
+              key={i}
+              className="border-r border-t border-purple-500 opacity-10"
+            ></div>
+          ))}
+        </div>
+        <div className="w-[80%] h-full flex justify-between items-center mb-10">
           <Lottie
             animationData={animationData}
             loop={true}
