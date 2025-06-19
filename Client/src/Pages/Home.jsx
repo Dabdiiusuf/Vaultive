@@ -2,6 +2,9 @@ import { useState, useContext, useRef, useEffect } from "react";
 import Lottie from "lottie-react";
 import animationData from "../Assets/Animation - 1750006662856 (1).json";
 import { MdArrowOutward } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+import { RiStockLine } from "react-icons/ri";
+import { RiTeamFill } from "react-icons/ri";
 import { AuthContext } from "../Providers/AuthContext";
 
 const Home = () => {
@@ -73,6 +76,55 @@ const Home = () => {
               through tools that are easy to use, built for insight, and
               flexible enough to grow with your goals.
             </p>
+          </div>
+        </div>
+        <div className="w-[80%] mt-50">
+          <h1 className="text-white text-5xl font-light font-[Montserrat]">
+            How it Works
+          </h1>
+          <p className="w-[70%] text-white text-lg font-thin mt-5">
+            A simple, smart, and secure way to discover stock tips and connect
+            with others – in just a few steps:
+          </p>
+        </div>
+        <div className="w-[80%] flex gap-10 mt-8 mb-8">
+          <div className="h-[350px] w-[50%] block border-r border-transparent shadow-[8px_0_3px_-2px_rgba(159,90,253,0.6)] p-5">
+            <p className="text-white font-thin text-md mt-4">Step 1</p>
+            <h1 className="text-white font-normal text-2xl mt-6">
+              Create your account
+            </h1>
+            <p className="text-white font-thin text-md mt-2">
+              Sign up easily and secure your profile in just a few steps.
+            </p>
+            <div className="flex justify-start mt-10">
+              <CgProfile className="text-purple-800 w-[100px] h-[100px]" />
+            </div>
+          </div>
+          <div className="h-[350px] w-[50%] block border-r border-transparent shadow-[8px_0_3px_-2px_rgba(159,90,253,0.6)] p-5">
+            <p className="text-white font-thin text-md mt-4">Step 2</p>
+            <h1 className="text-white font-normal text-2xl mt-6">
+              Browse Stock Tips
+            </h1>
+            <p className="text-white font-thin text-md mt-2">
+              Instantly access curated stock insights and expert
+              recommendations, updated daily.
+            </p>
+            <div className="flex justify-start mt-10">
+              <RiStockLine className="text-purple-800 w-[100px] h-[100px]" />
+            </div>
+          </div>
+          <div className="h-[350px] w-[50%] block p-5">
+            <p className="text-white font-thin text-md mt-4">Step 3</p>
+            <h1 className="text-white font-normal text-2xl mt-6">
+              Join the Conversation
+            </h1>
+            <p className="text-white font-thin text-md mt-2">
+              Chat with fellow investors, share thoughts, and stay informed in
+              real-time.
+            </p>
+            <div className="flex justify-start mt-10">
+              <RiTeamFill className="text-purple-800 w-[100px] h-[100px]" />
+            </div>
           </div>
         </div>
       </div>
