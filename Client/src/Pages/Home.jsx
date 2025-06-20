@@ -1,13 +1,33 @@
-import { useState, useContext, useRef, useEffect } from "react";
+import { useState, useContext } from "react";
 import Lottie from "lottie-react";
 import animationData from "../Assets/Animation - 1750006662856 (1).json";
 import { MdArrowOutward } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { RiStockLine } from "react-icons/ri";
 import { RiTeamFill } from "react-icons/ri";
+import { FaPlus } from "react-icons/fa6";
+import { HiOutlineMinus } from "react-icons/hi2";
 import { AuthContext } from "../Providers/AuthContext";
 
 const Home = () => {
+  // const [isOpen, setIsOpen] = useState(false);
+  const {
+    isFirstOpen,
+    isSecondOpen,
+    isThirdOpen,
+    isFourthOpen,
+    isFifthOpen,
+    setIsFirstOpen,
+    setIsSecondOpen,
+    setIsThirdOpen,
+    setIsFourthOpen,
+    setIsFifthOpen,
+  } = useContext(AuthContext);
+
+  // const handleQuestions = () => {
+  //   setIsFirstOpen(...!isFirstOpen);
+  // };
+
   return (
     <div className="w-full min-h-screen bg-gray-900">
       <div className="relative flex flex-col justify-center items-center min-h-screen">
@@ -126,6 +146,132 @@ const Home = () => {
               <RiTeamFill className="text-purple-800 w-[100px] h-[100px]" />
             </div>
           </div>
+        </div>
+        <div className="w-[80%] mt-50">
+          <h1 className="text-white text-5xl font-light font-[Montserrat]">
+            Your Questions, Answered
+          </h1>
+          <p className="w-[70%] text-white text-lg font-thin mt-5">
+            Everything you need to know about Vaultive – from account setup to
+            stock insights and chat features.
+          </p>
+        </div>
+        <div
+          onClick={() => setIsFirstOpen(!isFirstOpen)}
+          // onClick={handleQuestions}
+          className={`w-[80%] border-t border-b mt-5 border-purple-900 block overflow-hidden transition-all duration-300 ${
+            !isFirstOpen ? "h-[60px]" : "h-[150px]"
+          } p-4 cursor-pointer `}
+        >
+          <div className="flex justify-between">
+            <p className="text-white font-normal text-2xl items-center">
+              What is Vaultive?
+            </p>
+            <FaPlus
+              className={`text-white h-[25px] w-[25px] font-thin transition-all duration-300 ${
+                !isFirstOpen ? "rotate-0" : "rotate-45"
+              }`}
+            />
+          </div>
+          <p className="text-white text-lg font-thin mt-5">
+            Vaultive is a platform where users can discover curated stock tips
+            and connect with other investors through a real-time chat. It’s
+            designed to be a fast, simple, and secure way to stay ahead in the
+            market.
+          </p>
+        </div>
+        <div
+          onClick={() => setIsSecondOpen(!isSecondOpen)}
+          // onClick={handleQuestions}
+          className={`w-[80%] border-t border-b mt-5 border-purple-900 block overflow-hidden ${
+            !isSecondOpen ? "h-[60px]" : "h-[150px]"
+          } p-4 cursor-pointer transition-all duration-300`}
+        >
+          <div className="flex justify-between">
+            <p className="text-white font-normal text-2xl items-center">
+              Is Vaultive free to use?
+            </p>
+            <FaPlus
+              className={`text-white h-[25px] w-[25px] font-thin transition-all duration-300 ${
+                !isSecondOpen ? "rotate-0" : "rotate-45"
+              }`}
+            />
+          </div>
+          <p className="text-white text-lg font-thin mt-5">
+            Yes! Creating an account and accessing stock tips and the chat
+            feature are currently free. We may offer premium features in the
+            future, but the core experience is free for all users.
+          </p>
+        </div>
+        <div
+          onClick={() => setIsThirdOpen(!isThirdOpen)}
+          // onClick={handleQuestions}
+          className={`w-[80%] border-t border-b mt-5 border-purple-900 block overflow-hidden ${
+            !isThirdOpen ? "h-[60px]" : "h-[150px]"
+          } p-4 cursor-pointer transition-all duration-300`}
+        >
+          <div className="flex justify-between">
+            <p className="text-white font-normal text-2xl items-center">
+              Where do the stock tips come from?
+            </p>
+            <FaPlus
+              className={`text-white h-[25px] w-[25px] font-thin transition-all duration-300 ${
+                !isThirdOpen ? "rotate-0" : "rotate-45"
+              }`}
+            />
+          </div>
+          <p className="text-white text-lg font-thin mt-5">
+            Our stock tips are sourced from a combination of financial data,
+            market trends, and expert insights. While we aim to provide
+            high-quality information, users should always do their own research
+            before making investment decisions.
+          </p>
+        </div>
+        <div
+          onClick={() => setIsFourthOpen(!isFourthOpen)}
+          // onClick={handleQuestions}
+          className={`w-[80%] border-t border-b mt-5 border-purple-900 block overflow-hidden ${
+            !isFourthOpen ? "h-[60px]" : "h-[150px]"
+          } p-4 cursor-pointer transition-all duration-300`}
+        >
+          <div className="flex justify-between">
+            <p className="text-white font-normal text-2xl items-center">
+              Is the chat moderated?
+            </p>
+            <FaPlus
+              className={`text-white h-[25px] w-[25px] font-thin transition-all duration-300 ${
+                !isFourthOpen ? "rotate-0" : "rotate-45"
+              }`}
+            />
+          </div>
+          <p className="text-white text-lg font-thin mt-5">
+            Yes, Vaultive’s chat is monitored to ensure respectful and
+            constructive conversations. Spam, financial scams, or abusive
+            behavior are not tolerated.
+          </p>
+        </div>
+        <div
+          onClick={() => setIsFifthOpen(!isFifthOpen)}
+          // onClick={handleQuestions}
+          className={`w-[80%] border-t border-b mt-5 mb-20 border-purple-900 block transition-all duration-300 overflow-hidden ${
+            !isFifthOpen ? "h-[60px]" : "h-[150px]"
+          } p-4 cursor-pointer`}
+        >
+          <div className="flex justify-between">
+            <p className="text-white font-normal text-2xl items-center">
+              How is my data protected?
+            </p>
+            <FaPlus
+              className={`text-white h-[25px] w-[25px] font-thin transition-all duration-300 ${
+                !isFifthOpen ? "rotate-0" : "rotate-45"
+              }`}
+            />
+          </div>
+          <p className="text-white text-lg font-thin mt-5">
+            We take your privacy seriously. Vaultive uses secure encryption
+            protocols and never shares your personal data with third parties
+            without your consent. You can learn more in our Privacy Policy.
+          </p>
         </div>
       </div>
     </div>

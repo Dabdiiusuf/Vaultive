@@ -8,6 +8,11 @@ const AuthContextProvider = ({ children }) => {
   const [response, setResponse] = useState("");
   const [error, setError] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const [isFirstOpen, setIsFirstOpen] = useState(false);
+  const [isSecondOpen, setIsSecondOpen] = useState(false);
+  const [isThirdOpen, setIsThirdOpen] = useState(false);
+  const [isFourthOpen, setIsFourthOpen] = useState(false);
+  const [isFifthOpen, setIsFifthOpen] = useState(false);
 
   const handleForm = () => {
     setIsActive((prev) => !prev);
@@ -23,12 +28,22 @@ const AuthContextProvider = ({ children }) => {
         response,
         error,
         isActive,
+        isFirstOpen,
+        isSecondOpen,
+        isThirdOpen,
+        isFourthOpen,
+        isFifthOpen,
         handleForm,
         setUsername,
         setPassword,
         setResponse,
         setError,
         setIsActive,
+        setIsFirstOpen,
+        setIsSecondOpen,
+        setIsThirdOpen,
+        setIsFourthOpen,
+        setIsFifthOpen,
       }}
     >
       {children}
