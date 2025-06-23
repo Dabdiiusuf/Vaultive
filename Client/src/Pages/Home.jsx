@@ -6,8 +6,8 @@ import { CgProfile } from "react-icons/cg";
 import { RiStockLine } from "react-icons/ri";
 import { RiTeamFill } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa6";
-import { HiOutlineMinus } from "react-icons/hi2";
 import { AuthContext } from "../Providers/AuthContext";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   // const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +27,9 @@ const Home = () => {
   // const handleQuestions = () => {
   //   setIsFirstOpen(...!isFirstOpen);
   // };
+  const handleLocateTop = () => {
+    console.log("hello");
+  };
 
   return (
     <div className="w-full min-h-screen bg-gray-900">
@@ -57,9 +60,14 @@ const Home = () => {
               <br></br>
               Your goals, our support — every step of the way.
             </div>
-            <button className="flex items-center gap-2 text-left bg-purple-700 max-w-max px-3 py-2 rounded-3xl transition-all duration-200 hover:bg-purple-500 cursor-pointer">
-              Get started <MdArrowOutward className="w-[20px] h-[20px]" />
-            </button>
+            <Link
+              onClick={handleLocateTop}
+              to="/Register"
+              className="flex w-[140px] gap-2 border-2 z-10 items-center border-purple-800 text-white rounded-3xl pl-3 py-2 hover:bg-purple-700"
+            >
+              Get started
+              <MdArrowOutward className="w-[20px] h-[20px]" />
+            </Link>
           </div>
         </div>
       </div>
@@ -164,7 +172,7 @@ const Home = () => {
           } p-4 cursor-pointer `}
         >
           <div className="flex justify-between">
-            <p className="text-white font-normal text-2xl items-center">
+            <p className="text-white font-light text-2xl items-center">
               What is Vaultive?
             </p>
             <FaPlus
@@ -188,7 +196,7 @@ const Home = () => {
           } p-4 cursor-pointer transition-all duration-300`}
         >
           <div className="flex justify-between">
-            <p className="text-white font-normal text-2xl items-center">
+            <p className="text-white font-light text-2xl items-center">
               Is Vaultive free to use?
             </p>
             <FaPlus
@@ -211,7 +219,7 @@ const Home = () => {
           } p-4 cursor-pointer transition-all duration-300`}
         >
           <div className="flex justify-between">
-            <p className="text-white font-normal text-2xl items-center">
+            <p className="text-white font-light text-2xl items-center">
               Where do the stock tips come from?
             </p>
             <FaPlus
@@ -235,7 +243,7 @@ const Home = () => {
           } p-4 cursor-pointer transition-all duration-300`}
         >
           <div className="flex justify-between">
-            <p className="text-white font-normal text-2xl items-center">
+            <p className="text-white font-light text-2xl items-center">
               Is the chat moderated?
             </p>
             <FaPlus
@@ -258,7 +266,7 @@ const Home = () => {
           } p-4 cursor-pointer`}
         >
           <div className="flex justify-between">
-            <p className="text-white font-normal text-2xl items-center">
+            <p className="text-white font-light text-2xl">
               How is my data protected?
             </p>
             <FaPlus

@@ -3,7 +3,7 @@ import { SiVaultwarden } from "react-icons/si";
 
 const Navbar = () => {
   return (
-    <nav className="bg-gray-900 py-4 text-white flex justify-around font-[Montserrat] font-extralight text-md sticky top-0 z-10">
+    <nav className="bg-gray-900 py-4 text-white flex justify-around font-[Montserrat] font-extralight text-md sticky top-0 z-20">
       <ul className="flex gap-6 items-center">
         <Link to="/" className="flex items-center gap-2 mr-3">
           <SiVaultwarden style={{ width: "80px", height: "80px" }} />
