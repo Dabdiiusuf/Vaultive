@@ -1,12 +1,16 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const AuthContext = createContext(undefined);
 
 const AuthContextProvider = ({ children }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [csrf, setCsrf] = useState("");
   const [response, setResponse] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [isFirstOpen, setIsFirstOpen] = useState(false);
   const [isSecondOpen, setIsSecondOpen] = useState(false);
@@ -25,8 +29,12 @@ const AuthContextProvider = ({ children }) => {
       value={{
         username,
         password,
+        email,
+        avatar,
         response,
         error,
+        success,
+        csrf,
         isActive,
         isFirstOpen,
         isSecondOpen,
@@ -36,8 +44,12 @@ const AuthContextProvider = ({ children }) => {
         handleForm,
         setUsername,
         setPassword,
+        setEmail,
+        setAvatar,
         setResponse,
         setError,
+        setSuccess,
+        setCsrf,
         setIsActive,
         setIsFirstOpen,
         setIsSecondOpen,

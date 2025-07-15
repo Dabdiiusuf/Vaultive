@@ -1,15 +1,63 @@
-import { useState, useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../Providers/AuthContext";
 import Lottie from "lottie-react";
 import animationData from "../Assets/Animation - 1750006662856 (1).json";
 import { FaCheckCircle } from "react-icons/fa";
 
 const Register = () => {
-  const { username, password, setUsername, setPassword, handleForm } =
-    useContext(AuthContext);
+  const {
+    username,
+    password,
+    email,
+    csrf,
+    setUsername,
+    setPassword,
+    setEmail,
+    setAvatar,
+    setCsrf,
+    setError,
+    setSuccess,
+    handleForm,
+  } = useContext(AuthContext);
 
-  const handleButton = (e) => {
-    console.log("hello");
+  useEffect(() => {
+    fetch("https://chatify-api.up.railway.app/csrf", {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.csrfToken) {
+          setCsrf(data.csrfToken);
+        } else {
+          throw new Error("Error getting csrf Token");
+        }
+      });
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const result = fetch("https://chatify-api.up.railway.app/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password, csrf }),
+      });
+
+      const data = (await result).json();
+
+      if (!res.ok) {
+        throw new Error("Registration failed");
+      }
+      setSuccess("Registered successfully!");
+      setUsername("");
+      setPassword("");
+      setEmail("");
+    } catch (err) {
+      setError("Something went wrong");
+    }
   };
 
   return (
@@ -72,51 +120,69 @@ const Register = () => {
             </h1>
             <p className="text-sm">Register your account:</p>
           </div>
-          <div className="w-full flex flex-col items-center mt-10 gap-5">
-            <div className="relative flex flex-col w-full items-center">
-              <label className="absolute left-13 text-sm" htmlFor="username">
-                Username:
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col justify-center items-center"
+          >
+            <div className="relative flex flex-col w-full items-center mt-10">
+              <label className="absolute left-13 text-sm" htmlFor="email">
+                Email
               </label>
               <input
-                type="text"
-                placeholder="Username"
-                className="w-[80%] h-[40px] mt-6 p-4 border-1 rounded-lg focus:outline-none focus:border-none focus:ring-2 focus:ring-blue-500"
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-              />
-            </div>
-            <div className="relative flex flex-col w-full items-center">
-              <label className="absolute left-13 text-sm" htmlFor="password">
-                Password:
-              </label>
-              <input
-                type="password"
+                type="email"
                 autoComplete="off"
-                placeholder="Password"
+                placeholder="Email"
                 className="w-[80%] h-[40px] mt-6  p-4 border-1 rounded-lg focus:outline-none focus:border-none focus:ring-2 focus:ring-blue-500"
-                value={password}
+                value={email}
                 onChange={(e) => {
-                  setPassword(e.target.value);
+                  setEmail(e.target.value);
                 }}
               />
             </div>
-            <div className="w-[80%] flex gap-3 justify-start">
+            <div className="w-[80%] flex mt-5 justify-between gap-4">
+              <div className="relative flex flex-col w-2/3">
+                <label className="absolute left-0 text-sm" htmlFor="username">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  className="w-full h-[40px] mt-6 p-4 border-1 rounded-lg focus:outline-none focus:border-none focus:ring-2 focus:ring-blue-500"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="relative flex flex-col w-2/3 items-center">
+                <label className="absolute left-1 text-sm" htmlFor="password">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  autoComplete="off"
+                  placeholder="Password"
+                  className="w-full h-[40px] mt-6  p-4 border-1 rounded-lg focus:outline-none focus:border-none focus:ring-2 focus:ring-blue-500"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="w-[80%] flex gap-3 mt-5 justify-start">
               <input type="checkbox" className="mb-3" />
               <p className=" text-xs">
                 By creating an account, you agree to Vaultive’s Terms &
                 Conditions and Privacy Policy.
               </p>
             </div>
-          </div>
-          <div className="flex flex-col items-center h-full mt-15">
-            <button
-              onClick={handleButton}
-              className="px-4 py-1 w-[80%] rounded-sm bg-blue-300 hover:cursor-pointer hover:scale-105 hover:bg-blue-800 hover:text-white duration-300"
-            >
+            <button className="px-4 py-1 w-[80%] mt-10 rounded-sm bg-blue-300 hover:cursor-pointer hover:scale-105 hover:bg-blue-800 hover:text-white duration-300">
               Register
             </button>
+          </form>
+
+          <div className="flex flex-col items-center h-full">
             <div className="w-full flex flex-col items-center mt-10 gap-1">
               <p>Already have an account?</p>
               <button
