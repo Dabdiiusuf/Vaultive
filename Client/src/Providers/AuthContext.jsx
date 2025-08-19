@@ -6,12 +6,13 @@ const AuthContextProvider = ({ children }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [csrf, setCsrf] = useState("");
+  const [avatar, setAvatar] = useState(null);
+  const [csrfToken, setCsrfToken] = useState("");
   const [response, setResponse] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isFirstOpen, setIsFirstOpen] = useState(false);
   const [isSecondOpen, setIsSecondOpen] = useState(false);
   const [isThirdOpen, setIsThirdOpen] = useState(false);
@@ -34,8 +35,9 @@ const AuthContextProvider = ({ children }) => {
         response,
         error,
         success,
-        csrf,
+        csrfToken,
         isActive,
+        isLoading,
         isFirstOpen,
         isSecondOpen,
         isThirdOpen,
@@ -49,8 +51,9 @@ const AuthContextProvider = ({ children }) => {
         setResponse,
         setError,
         setSuccess,
-        setCsrf,
+        setCsrfToken,
         setIsActive,
+        setIsLoading,
         setIsFirstOpen,
         setIsSecondOpen,
         setIsThirdOpen,

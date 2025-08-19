@@ -1,24 +1,39 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../Providers/AuthContext";
 import Lottie from "lottie-react";
 import animationData from "../Assets/Animation - 1750006662856 (1).json";
 import { FaCheckCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import defaultAvatar from "../Assets/person_15473743.png";
 
 const Register = () => {
+  let navigate = useNavigate();
+
   const {
     username,
     password,
     email,
-    csrf,
+    csrfToken,
+    success,
+    avatar,
+    error,
     setUsername,
     setPassword,
     setEmail,
     setAvatar,
-    setCsrf,
+    setCsrfToken,
     setError,
     setSuccess,
     handleForm,
   } = useContext(AuthContext);
+
+  const handleAvatar = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const newAvatar = URL.createObjectURL(file);
+      setAvatar(newAvatar);
+    }
+  };
 
   useEffect(() => {
     fetch("https://chatify-api.up.railway.app/csrf", {
@@ -26,37 +41,86 @@ const Register = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.csrfToken) {
-          setCsrf(data.csrfToken);
-        } else {
-          throw new Error("Error getting csrf Token");
-        }
-      });
+        console.log("Fetched csrf token:", data.csrfToken);
+        setCsrfToken(data.csrfToken);
+      })
+      .catch((err) => console.error("CSRF fetch failed", err));
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const result = fetch("https://chatify-api.up.railway.app/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password, csrf }),
-      });
+      const res = await fetch(
+        "https://chatify-api.up.railway.app/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+            email,
+            avatar,
+            csrfToken,
+          }),
+        }
+      );
 
-      const data = (await result).json();
-
-      if (!res.ok) {
-        throw new Error("Registration failed");
+      if (res.status === 400) {
+        const errorData = await res.json();
+        setError(
+          errorData.message ||
+            "Registration failed: Username or email already exists."
+        );
+        return;
       }
-      setSuccess("Registered successfully!");
-      setUsername("");
-      setPassword("");
-      setEmail("");
+
+      if (res.status === 500) {
+        setError("Internal Server Error, please try again later.");
+        return;
+      }
+
+      if (res.status === 201) {
+        setSuccess("Registered successfully!");
+
+        const resToken = await fetch(
+          "https://chatify-api.up.railway.app/auth/token",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password, csrfToken }),
+          }
+        );
+
+        if (!resToken.ok) {
+          console.log("Token fetch failed");
+          return;
+        }
+
+        const data = await resToken.json();
+        const token = data.token;
+        localStorage.setItem("jwt", token);
+        console.log(token);
+
+        setTimeout(() => {
+          navigate("/Login");
+        }, 2500);
+
+        setUsername("");
+        setPassword("");
+        setEmail("");
+
+        return;
+      }
+
+      setError("Unexpected error occurred. Please try again.");
     } catch (err) {
       setError("Something went wrong");
+      console.error("Registration error:", err);
     }
   };
 
@@ -119,6 +183,7 @@ const Register = () => {
               Welcome: "{username}"
             </h1>
             <p className="text-sm">Register your account:</p>
+            <p className="text-lg text-green-600">{success}</p>
           </div>
           <form
             onSubmit={handleSubmit}
@@ -169,6 +234,19 @@ const Register = () => {
                   }}
                 />
               </div>
+            </div>
+            <div className="w-[80%] flex mt-5 justify-center gap-4">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleAvatar}
+                className="w-full cursor-pointer border-1"
+              />
+              <img
+                src={avatar || defaultAvatar}
+                alt=""
+                className="w-[80px] h-[80px] rounded-[50%]"
+              />
             </div>
             <div className="w-[80%] flex gap-3 mt-5 justify-start">
               <input type="checkbox" className="mb-3" />
