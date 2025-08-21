@@ -18,6 +18,7 @@ const Navbar = () => {
         <button className="mt-2 relative underline-hover cursor-pointer">
           FAQ
         </button>
+        <Link to="/chat">Chat</Link>
         {/* <li className="mt-2">
           <Link to="/Profile" className="relative underline-hover">
             Profile

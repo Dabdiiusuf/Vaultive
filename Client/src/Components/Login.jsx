@@ -17,6 +17,29 @@ const Login = () => {
     console.log("hello");
   };
 
+  const handleLogin = async (e) => {
+    const resToken = await fetch(
+      "https://chatify-api.up.railway.app/auth/token",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password, csrfToken }),
+      }
+    );
+
+    if (!resToken.ok) {
+      console.log("Token fetch failed");
+      return;
+    }
+
+    const data = await resToken.json();
+    const token = data.token;
+    localStorage.setItem("jwt", token);
+    console.log(token);
+  };
+
   return (
     <div className="w-full h-full bg-gray-900 flex justify-center items-center relative">
       <div className="absolute inset-0 z-10 grid grid-cols-5 grid-rows-5">

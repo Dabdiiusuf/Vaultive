@@ -2,6 +2,7 @@ import Home from "../Pages/Home";
 import Navbar from "./Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MyProfile from "../Pages/MyProfile";
+import Chat from "../Pages/Chat";
 import NotFound from "../Pages/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthContextProvider } from "../Providers/AuthContext";
@@ -24,6 +25,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/Profile" element={<MyProfile />} />
             </Route>
+            <Route path="/Chat" element={<Chat />} />
             <Route path="/TermsOfUse" element={<TermsOfUse />} />
             <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
             <Route path="*" element={<NotFound />} />

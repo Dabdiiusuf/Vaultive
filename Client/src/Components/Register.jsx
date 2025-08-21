@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../Providers/AuthContext";
 import Lottie from "lottie-react";
 import animationData from "../Assets/Animation - 1750006662856 (1).json";
@@ -8,6 +8,7 @@ import defaultAvatar from "../Assets/person_15473743.png";
 
 const Register = () => {
   let navigate = useNavigate();
+  const [preview, setPreview] = useState(null);
 
   const {
     username,
@@ -28,11 +29,10 @@ const Register = () => {
   } = useContext(AuthContext);
 
   const handleAvatar = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const newAvatar = URL.createObjectURL(file);
-      setAvatar(newAvatar);
-    }
+    const avatarID = "Dabdi";
+    const avatarURL = `https://i.pravatar.cc/200?u=${avatarID}`;
+    setAvatar(avatarURL);
+    setPreview(avatarURL);
   };
 
   useEffect(() => {
@@ -59,11 +59,11 @@ const Register = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username,
-            password,
-            email,
-            avatar,
-            csrfToken,
+            username: username,
+            password: password,
+            email: email,
+            avatar: avatar,
+            csrfToken: csrfToken,
           }),
         }
       );
@@ -84,27 +84,6 @@ const Register = () => {
 
       if (res.status === 201) {
         setSuccess("Registered successfully!");
-
-        const resToken = await fetch(
-          "https://chatify-api.up.railway.app/auth/token",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username, password, csrfToken }),
-          }
-        );
-
-        if (!resToken.ok) {
-          console.log("Token fetch failed");
-          return;
-        }
-
-        const data = await resToken.json();
-        const token = data.token;
-        localStorage.setItem("jwt", token);
-        console.log(token);
 
         setTimeout(() => {
           navigate("/Login");
@@ -184,6 +163,7 @@ const Register = () => {
             </h1>
             <p className="text-sm">Register your account:</p>
             <p className="text-lg text-green-600">{success}</p>
+            <p className="text-lg text-red-600">{error}</p>
           </div>
           <form
             onSubmit={handleSubmit}
@@ -243,7 +223,7 @@ const Register = () => {
                 className="w-full cursor-pointer border-1"
               />
               <img
-                src={avatar || defaultAvatar}
+                src={preview || defaultAvatar}
                 alt=""
                 className="w-[80px] h-[80px] rounded-[50%]"
               />
