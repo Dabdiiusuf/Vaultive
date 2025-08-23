@@ -1,14 +1,12 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../Providers/AuthContext";
 import Lottie from "lottie-react";
 import animationData from "../Assets/Animation - 1750006662856 (1).json";
 import { FaCheckCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import defaultAvatar from "../Assets/person_15473743.png";
 
 const Register = () => {
   let navigate = useNavigate();
-  const [preview, setPreview] = useState(null);
 
   const {
     username,
@@ -18,6 +16,7 @@ const Register = () => {
     success,
     avatar,
     error,
+    isLoading,
     setUsername,
     setPassword,
     setEmail,
@@ -26,13 +25,18 @@ const Register = () => {
     setError,
     setSuccess,
     handleForm,
+    setIsLoading,
   } = useContext(AuthContext);
 
   const handleAvatar = (e) => {
-    const avatarID = "Dabdi";
-    const avatarURL = `https://i.pravatar.cc/200?u=${avatarID}`;
-    setAvatar(avatarURL);
-    setPreview(avatarURL);
+    e.preventDefault();
+    if (username) {
+      setAvatar(`https://i.pravatar.cc/200?u=${username}-${Date.now()}`);
+    }
+  };
+
+  const handleSignIn = () => {
+    navigate("/Login");
   };
 
   useEffect(() => {
@@ -84,14 +88,18 @@ const Register = () => {
 
       if (res.status === 201) {
         setSuccess("Registered successfully!");
+        setIsLoading(true);
 
         setTimeout(() => {
           navigate("/Login");
-        }, 2500);
+          setIsLoading(false);
+        }, 2000);
 
         setUsername("");
         setPassword("");
         setEmail("");
+        setError("");
+        setSuccess("");
 
         return;
       }
@@ -113,6 +121,22 @@ const Register = () => {
           ></div>
         ))}
       </div>
+      {isLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="w-[350px] h-[200px] bg-gray-800 rounded-2xl shadow-[0_4px_17px_rgba(159,90,253,1)] text-white text-lg flex items-center justify-center gap-3">
+            <Lottie
+              animationData={animationData}
+              loop={true}
+              autoplay={true}
+              className="h-[80px] w-[80px]"
+            />
+            <div className="flex flex-col">
+              {success}
+              <p>Redirecting to Login page</p>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="w-[70%] h-[80%] relative z-10 shadow-[0_4px_17px_rgba(159,90,253,1)] gap-5 rounded-4xl overflow-hidden">
         <div className="w-[50%] h-full absolute left-0 rounded-l-4xl flex flex-col items-center">
           <Lottie
@@ -215,18 +239,19 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className="w-[80%] flex mt-5 justify-center gap-4">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleAvatar}
-                className="w-full cursor-pointer border-1"
-              />
+            <div className="w-[80%] flex mt-5 justify-center gap-4 items-center">
+              <input type="hidden" value={avatar} name="avatar" />
               <img
-                src={preview || defaultAvatar}
+                src={avatar || "https://i.pravatar.cc/200?u=default"}
                 alt=""
                 className="w-[80px] h-[80px] rounded-[50%]"
               />
+              <button
+                onClick={handleAvatar}
+                className="max-w-max bg-blue-300 rounded-sm p-3 max-h-max hover:cursor-pointer hover:scale-105 hover:bg-blue-800 hover:text-white duration-300"
+              >
+                Refresh Avatar
+              </button>
             </div>
             <div className="w-[80%] flex gap-3 mt-5 justify-start">
               <input type="checkbox" className="mb-3" />
@@ -244,7 +269,7 @@ const Register = () => {
             <div className="w-full flex flex-col items-center mt-10 gap-1">
               <p>Already have an account?</p>
               <button
-                onClick={handleForm}
+                onClick={handleSignIn}
                 className="bg-gray-800 w-[80%] text-white px-4 py-1 rounded-sm hover:cursor-pointer hover:scale-105 hover:bg-blue-800 hover:text-white duration-300"
               >
                 Sign in

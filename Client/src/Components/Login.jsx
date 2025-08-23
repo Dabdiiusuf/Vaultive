@@ -1,21 +1,45 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../Providers/AuthContext";
 import Lottie from "lottie-react";
 import animationData from "../Assets/Animation - 1750006662856 (1).json";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdArrowOutward } from "react-icons/md";
 
 const Login = () => {
-  const { username, password, setUsername, setPassword, handleForm } =
-    useContext(AuthContext);
+  const {
+    username,
+    password,
+    handleForm,
+    csrfToken,
+    error,
+    setPassword,
+    setUsername,
+    setCsrfToken,
+    setError,
+    setDecodedJwt,
+  } = useContext(AuthContext);
 
-  const handleButton = (e) => {
-    console.log("hello");
-  };
+  let navigate = useNavigate();
 
   const handleLocateTop = () => {
     console.log("hello");
   };
+
+  const handleRegister = () => {
+    navigate("/Register");
+  };
+
+  useEffect(() => {
+    fetch("https://chatify-api.up.railway.app/csrf", {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Fetched csrf token:", data.csrfToken);
+        setCsrfToken(data.csrfToken);
+      })
+      .catch((err) => console.error("CSRF fetch failed", err));
+  }, []);
 
   const handleLogin = async (e) => {
     const resToken = await fetch(
@@ -30,14 +54,26 @@ const Login = () => {
     );
 
     if (!resToken.ok) {
-      console.log("Token fetch failed");
+      console.log("Invalid credentials");
+      setError("Invalid credentials");
       return;
     }
 
     const data = await resToken.json();
     const token = data.token;
     localStorage.setItem("jwt", token);
+
+    const decodedJwt = JSON.parse(atob(token.split(".")[1]));
+    setDecodedJwt(decodedJwt);
     console.log(token);
+    console.log(decodedJwt);
+
+    setTimeout(() => {
+      navigate("/Chat");
+    }, 2000);
+    setError("");
+    setUsername("");
+    setPassword("");
   };
 
   return (
@@ -84,6 +120,7 @@ const Login = () => {
               Welcome: "{username}"
             </h1>
             <p className="text-sm">Sign in to your account:</p>
+            <p className="text-lg text-red-600">{error}</p>
           </div>
           <div className="w-full flex flex-col items-center mt-10 gap-5">
             <div className="relative flex flex-col w-full items-center">
@@ -122,7 +159,7 @@ const Login = () => {
           </div>
           <div className="flex flex-col items-center h-full mt-15">
             <button
-              onClick={handleButton}
+              onClick={handleLogin}
               className="px-4 py-1 w-[80%] rounded-sm bg-blue-300 hover:cursor-pointer hover:scale-105 hover:bg-blue-800 hover:text-white duration-300"
             >
               Sign in
@@ -130,7 +167,7 @@ const Login = () => {
             <div className="w-full flex flex-col items-center mt-10 gap-1">
               <p>Don't have an account?</p>
               <button
-                onClick={handleForm}
+                onClick={handleRegister}
                 className="bg-gray-800 w-[80%] text-white px-4 py-1 rounded-sm hover:cursor-pointer hover:scale-105 hover:bg-blue-800 hover:text-white duration-300"
               >
                 Register

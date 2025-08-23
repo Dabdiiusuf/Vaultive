@@ -8,6 +8,7 @@ const AuthContextProvider = ({ children }) => {
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState(null);
   const [csrfToken, setCsrfToken] = useState("");
+  const [jwt, setDecodedJwt] = useState("");
   const [response, setResponse] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -43,6 +44,7 @@ const AuthContextProvider = ({ children }) => {
         isThirdOpen,
         isFourthOpen,
         isFifthOpen,
+        jwt,
         handleForm,
         setUsername,
         setPassword,
@@ -59,6 +61,7 @@ const AuthContextProvider = ({ children }) => {
         setIsThirdOpen,
         setIsFourthOpen,
         setIsFifthOpen,
+        setDecodedJwt,
       }}
     >
       {children}
