@@ -9,6 +9,7 @@ const AuthContextProvider = ({ children }) => {
   const [avatar, setAvatar] = useState(null);
   const [csrfToken, setCsrfToken] = useState("");
   const [jwt, setDecodedJwt] = useState("");
+  const [authToken, setAuthToken] = useState(localStorage.getItem("jwt"));
   const [response, setResponse] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -24,6 +25,11 @@ const AuthContextProvider = ({ children }) => {
     setIsActive((prev) => !prev);
     setUsername("");
     setPassword("");
+  };
+
+  const handleLogout = () => {
+    setAuthToken(null);
+    localStorage.removeItem("jwt");
   };
 
   return (
@@ -45,6 +51,8 @@ const AuthContextProvider = ({ children }) => {
         isFourthOpen,
         isFifthOpen,
         jwt,
+        authToken,
+        handleLogout,
         handleForm,
         setUsername,
         setPassword,
@@ -62,6 +70,7 @@ const AuthContextProvider = ({ children }) => {
         setIsFourthOpen,
         setIsFifthOpen,
         setDecodedJwt,
+        setAuthToken,
       }}
     >
       {children}

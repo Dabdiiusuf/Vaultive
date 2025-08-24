@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { SiVaultwarden } from "react-icons/si";
+import { AuthContext } from "../Providers/AuthContext";
+import { useContext } from "react";
+import ProtectedRoute from "./ProtectedRoute";
 
 const Navbar = () => {
+  const { authToken, handleLogout } = useContext(AuthContext);
+
   return (
     <nav className="bg-gray-900 py-4 text-white flex justify-around font-[Montserrat] font-extralight text-md sticky top-0 z-20">
       <ul className="flex gap-6 items-center">
@@ -18,27 +23,44 @@ const Navbar = () => {
         <button className="mt-2 relative underline-hover cursor-pointer">
           FAQ
         </button>
-        <Link to="/chat">Chat</Link>
-        {/* <li className="mt-2">
-          <Link to="/Profile" className="relative underline-hover">
-            Profile
-          </Link>
-        </li> */}
       </ul>
       <ul className="flex gap-6 items-center">
-        <li>
-          <Link to="/Login" className="relative underline-hover">
-            Login
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/Register"
-            className="border-2 border-purple-800 rounded-3xl px-5 py-2 hover:bg-purple-700"
-          >
-            Register
-          </Link>
-        </li>
+        {authToken ? (
+          <>
+            <li>
+              <Link to="/Profile" className="relative underline-hover">
+                Profile
+              </Link>
+            </li>
+            <li>
+              <Link to="/chat" className="relative underline-hover">
+                Chat
+              </Link>
+            </li>
+            <button
+              onClick={handleLogout}
+              className="border-2 border-purple-800 rounded-3xl px-5 py-2 hover:bg-purple-700 cursor-pointer"
+            >
+              Log out
+            </button>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to="/Login" className="relative underline-hover">
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/Register"
+                className="border-2 border-purple-800 rounded-3xl px-5 py-2 hover:bg-purple-700"
+              >
+                Register
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );

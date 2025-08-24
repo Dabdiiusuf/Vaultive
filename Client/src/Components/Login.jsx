@@ -12,11 +12,17 @@ const Login = () => {
     handleForm,
     csrfToken,
     error,
+    success,
+    authToken,
+    isLoading,
     setPassword,
     setUsername,
     setCsrfToken,
     setError,
     setDecodedJwt,
+    setAuthToken,
+    setIsLoading,
+    setSuccess,
   } = useContext(AuthContext);
 
   let navigate = useNavigate();
@@ -54,14 +60,17 @@ const Login = () => {
     );
 
     if (!resToken.ok) {
-      console.log("Invalid credentials");
+      console.log("Token fetched failed");
       setError("Invalid credentials");
       return;
     }
 
+    setIsLoading(true);
     const data = await resToken.json();
     const token = data.token;
     localStorage.setItem("jwt", token);
+    setAuthToken(token);
+    setSuccess("Log in Successful");
 
     const decodedJwt = JSON.parse(atob(token.split(".")[1]));
     setDecodedJwt(decodedJwt);
@@ -70,7 +79,9 @@ const Login = () => {
 
     setTimeout(() => {
       navigate("/Chat");
+      setIsLoading(false);
     }, 2000);
+
     setError("");
     setUsername("");
     setPassword("");
@@ -86,6 +97,22 @@ const Login = () => {
           ></div>
         ))}
       </div>
+      {isLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="w-[350px] h-[200px] bg-gray-800 rounded-2xl shadow-[0_4px_17px_rgba(159,90,253,1)] text-white text-lg flex items-center justify-center gap-3">
+            <Lottie
+              animationData={animationData}
+              loop={true}
+              autoplay={true}
+              className="h-[80px] w-[80px]"
+            />
+            <div className="flex flex-col">
+              {success}
+              <p>Redirecting to Login page</p>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="w-[70%] h-[80%] relative z-10 shadow-[0_4px_17px_rgba(159,90,253,1)] gap-5 rounded-4xl overflow-hidden">
         <div className="w-[50%] h-full absolute left-0 rounded-l-4xl flex flex-col items-center">
           <Lottie

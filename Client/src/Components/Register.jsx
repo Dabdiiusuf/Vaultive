@@ -30,13 +30,18 @@ const Register = () => {
 
   const handleAvatar = (e) => {
     e.preventDefault();
-    if (username) {
+    if (!username) {
+      setError("Username needed");
+    } else {
       setAvatar(`https://i.pravatar.cc/200?u=${username}-${Date.now()}`);
+      setError("");
     }
   };
 
   const handleSignIn = () => {
     navigate("/Login");
+    setUsername("");
+    setPassword("");
   };
 
   useEffect(() => {
@@ -73,11 +78,8 @@ const Register = () => {
       );
 
       if (res.status === 400) {
-        const errorData = await res.json();
-        setError(
-          errorData.message ||
-            "Registration failed: Username or email already exists."
-        );
+        // const errorData = await res.json();
+        setError("Registration failed: Username or email already exists.");
         return;
       }
 
@@ -137,7 +139,7 @@ const Register = () => {
           </div>
         </div>
       )}
-      <div className="w-[70%] h-[80%] relative z-10 shadow-[0_4px_17px_rgba(159,90,253,1)] gap-5 rounded-4xl overflow-hidden">
+      <div className="w-[70%] h-[650px] relative z-10 shadow-[0_4px_17px_rgba(159,90,253,1)] gap-5 rounded-4xl overflow-hidden">
         <div className="w-[50%] h-full absolute left-0 rounded-l-4xl flex flex-col items-center">
           <Lottie
             animationData={animationData}
@@ -193,7 +195,7 @@ const Register = () => {
             onSubmit={handleSubmit}
             className="flex flex-col justify-center items-center"
           >
-            <div className="relative flex flex-col w-full items-center mt-10">
+            <div className="relative flex flex-col w-full items-center mt-7">
               <label className="absolute left-13 text-sm" htmlFor="email">
                 Email
               </label>
@@ -240,7 +242,7 @@ const Register = () => {
               </div>
             </div>
             <div className="w-[80%] flex mt-5 justify-center gap-4 items-center">
-              <input type="hidden" value={avatar} name="avatar" />
+              {/* <input type="hidden" value={avatar} name="avatar" /> */}
               <img
                 src={avatar || "https://i.pravatar.cc/200?u=default"}
                 alt=""

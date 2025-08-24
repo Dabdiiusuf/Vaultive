@@ -33,8 +33,8 @@ function App() {
             <Route path="/Register" element={<Register />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/Profile" element={<MyProfile />} />
+              <Route path="/Chat" element={<Chat />} />
             </Route>
-            <Route path="/Chat" element={<Chat />} />
             <Route path="/TermsOfUse" element={<TermsOfUse />} />
             <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
             <Route path="*" element={<NotFound />} />
