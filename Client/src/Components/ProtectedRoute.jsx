@@ -6,7 +6,7 @@ const ProtectedRoute = () => {
   const { authToken } = useContext(AuthContext);
   // console.log(authToken);
 
-  return authToken ? <Outlet /> : <Navigate to="/Login" />;
+  return authToken ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

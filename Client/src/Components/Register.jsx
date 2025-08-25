@@ -24,7 +24,6 @@ const Register = () => {
     setCsrfToken,
     setError,
     setSuccess,
-    handleForm,
     setIsLoading,
   } = useContext(AuthContext);
 
@@ -58,6 +57,10 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // if (email || username || password === "") {
+    //   setError("Email, username and password can not be empty!");
+    //   return;
+    // }
 
     try {
       const res = await fetch(
@@ -105,8 +108,6 @@ const Register = () => {
 
         return;
       }
-
-      setError("Unexpected error occurred. Please try again.");
     } catch (err) {
       setError("Something went wrong");
       console.error("Registration error:", err);

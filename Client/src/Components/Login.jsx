@@ -9,7 +9,6 @@ const Login = () => {
   const {
     username,
     password,
-    handleForm,
     csrfToken,
     error,
     success,
@@ -26,10 +25,6 @@ const Login = () => {
   } = useContext(AuthContext);
 
   let navigate = useNavigate();
-
-  const handleLocateTop = () => {
-    console.log("hello");
-  };
 
   const handleRegister = () => {
     navigate("/Register");
@@ -72,8 +67,16 @@ const Login = () => {
     setAuthToken(token);
     setSuccess("Log in Successful");
 
-    const decodedJwt = JSON.parse(atob(token.split(".")[1]));
+    const decodedJwt = JSON.parse(
+      decodeURIComponent(
+        atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))
+          .split("")
+          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+          .join("")
+      )
+    );
     setDecodedJwt(decodedJwt);
+    localStorage.setItem("decodedJwt", JSON.stringify(decodedJwt));
     console.log(token);
     console.log(decodedJwt);
 
@@ -119,7 +122,7 @@ const Login = () => {
             animationData={animationData}
             loop={true}
             autoplay={true}
-            className="h-[100px] w-[100px] absolute top-0 left-[40%]"
+            className="h-[100px] w-[100px] absolute top-0 left-[40%] mt-10"
           />
           <div className="flex w-[100%] ml-20 h-full gap-5 justify-center flex-col">
             <div className="items-center flex-col">
@@ -132,7 +135,6 @@ const Login = () => {
               </p>
             </div>
             <Link
-              onClick={handleLocateTop}
               to="/"
               className="flex w-[140px] gap-2 border-2 items-center border-purple-800 text-white rounded-3xl pl-3 py-2 hover:bg-purple-700"
             >
@@ -143,9 +145,11 @@ const Login = () => {
         </div>
         <div className="w-[50%] h-full absolute right-0 bg-gray-200 rounded-r-4xl">
           <div className="mx-auto mt-10 text-center">
-            <h1 className="text-3xl font-bold text-gray-700 mb-1">
-              Welcome: "{username}"
-            </h1>
+            {username && username.length > 0 && (
+              <h1 className="text-3xl font-bold text-gray-700 mb-1">
+                Welcome: "{username}"
+              </h1>
+            )}
             <p className="text-sm">Sign in to your account:</p>
             <p className="text-lg text-red-600">{error}</p>
           </div>

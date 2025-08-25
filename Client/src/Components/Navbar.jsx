@@ -1,11 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SiVaultwarden } from "react-icons/si";
 import { AuthContext } from "../Providers/AuthContext";
 import { useContext } from "react";
 import ProtectedRoute from "./ProtectedRoute";
 
 const Navbar = () => {
-  const { authToken, handleLogout } = useContext(AuthContext);
+  const { authToken, setAuthToken } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setAuthToken(null);
+    localStorage.removeItem("jwt");
+    navigate("/");
+  };
 
   return (
     <nav className="bg-gray-900 py-4 text-white flex justify-around font-[Montserrat] font-extralight text-md sticky top-0 z-20">
@@ -41,7 +48,7 @@ const Navbar = () => {
               onClick={handleLogout}
               className="border-2 border-purple-800 rounded-3xl px-5 py-2 hover:bg-purple-700 cursor-pointer"
             >
-              Log out
+              Logout
             </button>
           </>
         ) : (
