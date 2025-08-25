@@ -1,4 +1,5 @@
 import { IoSendSharp } from "react-icons/io5";
+import { MdOutlineClose } from "react-icons/md";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../Providers/AuthContext";
 
@@ -14,6 +15,7 @@ const Chat = () => {
     setPostMessage,
     postMessage,
     getMessages,
+    handleDelete,
   } = useContext(AuthContext);
 
   useEffect(() => {
@@ -63,8 +65,14 @@ const Chat = () => {
               {getMessages &&
                 getMessages.map((message, index) => (
                   <div key={index}>
-                    <div className="inline-block max-h-max bg-gray-800 rounded-2xl text-white p-4 shadow-[0_2px_13px_rgba(159,90,253,1)]">
-                      {message.text}
+                    <div className="relative inline-block max-w-max max-h-max bg-gray-800 rounded-2xl text-white p-5 shadow-[0_2px_13px_rgba(159,90,253,1)]">
+                      <div>{message.text}</div>
+                      <div className="absolute inset-0 opacity-0 hover:opacity-100 duration-150">
+                        <MdOutlineClose
+                          onClick={() => handleDelete(message.id)}
+                          className="absolute top-1 right-1 cursor-pointer hover:scale-120 hover:text-purple-400"
+                        />
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -84,7 +92,7 @@ const Chat = () => {
             />
             <IoSendSharp
               onClick={handlePostMessage}
-              className="absolute text-white text-2xl top-1/2 -translate-y-1/2 left-135 cursor-pointer hover:scale-110 duration-200"
+              className="absolute text-white text-2xl top-1/2 -translate-y-1/2 left-135 cursor-pointer hover:scale-120 duration-200 hover:text-purple-700"
             />
           </div>
         </div>

@@ -85,6 +85,7 @@ const Login = () => {
       setIsLoading(false);
     }, 2000);
 
+    // setSuccess("");
     setError("");
     setUsername("");
     setPassword("");

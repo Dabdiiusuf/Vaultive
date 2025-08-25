@@ -81,8 +81,7 @@ const Register = () => {
       );
 
       if (res.status === 400) {
-        // const errorData = await res.json();
-        setError("Registration failed: Username or email already exists.");
+        setError("Username or email already exists.");
         return;
       }
 
@@ -146,7 +145,7 @@ const Register = () => {
             animationData={animationData}
             loop={true}
             autoplay={true}
-            className="h-[100px] w-[100px] absolute top-0 left-[40%]"
+            className="h-[100px] w-[100px] absolute top-0 left-[40%] mt-10"
           />
           <div className="flex h-full gap-5 flex-col justify-center items-center">
             <p className="text-white text-2xl w-[80%] font-normal mt-10">

@@ -89,6 +89,29 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  //DELETE MESSAGE
+  const handleDelete = (msgID) => {
+    try {
+      const res = fetch(
+        `https://chatify-api.up.railway.app/messages/${msgID}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error(`Failed to delete message: ${res.status}`);
+      }
+
+      console.log("Message deleted");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -134,6 +157,7 @@ const AuthContextProvider = ({ children }) => {
         handlePostMessage,
         setInputValue,
         setPostMessage,
+        handleDelete,
       }}
     >
       {children}
