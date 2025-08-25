@@ -1,15 +1,40 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SiVaultwarden } from "react-icons/si";
 import { AuthContext } from "../Providers/AuthContext";
 import { useContext } from "react";
 
 const Navbar = () => {
   const { authToken, setAuthToken } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     setAuthToken(null);
     localStorage.removeItem("jwt");
     localStorage.removeItem("decodedJwt");
+  };
+
+  const handleAbout = () => {
+    navigate("/");
+
+    setTimeout(() => {
+      window.scrollTo({ top: 650, behavior: "smooth" });
+    }, 50);
+  };
+
+  const handleHIW = () => {
+    navigate("/");
+
+    setTimeout(() => {
+      window.scrollTo({ top: 1300, behavior: "smooth" });
+    }, 50);
+  };
+
+  const handleFAQ = () => {
+    navigate("/");
+
+    setTimeout(() => {
+      window.scrollTo({ top: 2000, behavior: "smooth" });
+    }, 50);
   };
 
   return (
@@ -19,13 +44,22 @@ const Navbar = () => {
           <SiVaultwarden style={{ width: "80px", height: "80px" }} />
           <h1 className="text-2xl font-medium">Vaultive</h1>
         </Link>
-        <button className="mt-2 relative underline-hover cursor-pointer">
+        <button
+          onClick={handleAbout}
+          className="mt-2 relative underline-hover cursor-pointer"
+        >
           About
         </button>
-        <button className="mt-2 relative underline-hover cursor-pointer">
+        <button
+          onClick={handleHIW}
+          className="mt-2 relative underline-hover cursor-pointer"
+        >
           How it works
         </button>
-        <button className="mt-2 relative underline-hover cursor-pointer">
+        <button
+          onClick={handleFAQ}
+          className="mt-2 relative underline-hover cursor-pointer"
+        >
           FAQ
         </button>
       </ul>

@@ -92,7 +92,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-full bg-gray-900 flex justify-center items-center relative">
+    <div className="w-full min-h-screen bg-gray-900 flex justify-center items-center relative">
       <div className="absolute inset-0 z-10 grid grid-cols-5 grid-rows-5">
         {Array.from({ length: 25 }).map((_, i) => (
           <div
@@ -117,7 +117,7 @@ const Login = () => {
           </div>
         </div>
       )}
-      <div className="w-[70%] h-[80%] relative z-10 shadow-[0_4px_17px_rgba(159,90,253,1)] gap-5 rounded-4xl overflow-hidden">
+      <div className="w-[1000px] h-[650px] relative z-10 shadow-[0_4px_17px_rgba(159,90,253,1)] gap-5 rounded-4xl overflow-hidden">
         <div className="w-[50%] h-full absolute left-0 rounded-l-4xl flex flex-col items-center">
           <Lottie
             animationData={animationData}

@@ -20,7 +20,7 @@ import PrivacyPolicy from "../Pages/PrivacyPolicy";
 function App() {
   return (
     <AuthContextProvider>
-      <div className="w-screen h-screen overflow-x-hidden bg-gray-900">
+      <div className="overflow-x-hidden bg-gray-900">
         <Router>
           <Navbar />
           <Routes>
