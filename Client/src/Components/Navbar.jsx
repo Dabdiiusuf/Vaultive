@@ -1,17 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SiVaultwarden } from "react-icons/si";
 import { AuthContext } from "../Providers/AuthContext";
 import { useContext } from "react";
-import ProtectedRoute from "./ProtectedRoute";
 
 const Navbar = () => {
   const { authToken, setAuthToken } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     setAuthToken(null);
     localStorage.removeItem("jwt");
-    navigate("/");
+    localStorage.removeItem("decodedJwt");
   };
 
   return (

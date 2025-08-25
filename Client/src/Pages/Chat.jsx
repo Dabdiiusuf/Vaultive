@@ -52,7 +52,6 @@ const Chat = () => {
         <div className="text-white w-[80%] flex flex-col items-center">
           <div className="h-[80%] w-full flex justify-around overflow-scroll py-5">
             <div className="flex flex-col gap-5">
-              {/* {error && <div>{error}</div>} */}
               <div className="inline-block max-h-max bg-gray-800 rounded-2xl text-white p-4 shadow-[0_2px_13px_rgba(159,90,253,1)]">
                 hello
               </div>

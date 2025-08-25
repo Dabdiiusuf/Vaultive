@@ -18,10 +18,6 @@ import TermsOfUse from "../Pages/TermsOfUse";
 import PrivacyPolicy from "../Pages/PrivacyPolicy";
 
 function App() {
-  // const location = useLocation();
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, [location]);
   return (
     <AuthContextProvider>
       <div className="w-screen h-screen overflow-x-hidden bg-gray-900">

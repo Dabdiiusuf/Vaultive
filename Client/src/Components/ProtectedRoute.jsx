@@ -4,7 +4,6 @@ import { AuthContext } from "../Providers/AuthContext";
 
 const ProtectedRoute = () => {
   const { authToken } = useContext(AuthContext);
-  // console.log(authToken);
 
   return authToken ? <Outlet /> : <Navigate to="/" />;
 };
