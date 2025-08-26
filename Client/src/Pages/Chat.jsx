@@ -1,6 +1,6 @@
+import { useContext, useEffect, useRef } from "react";
 import { IoSendSharp } from "react-icons/io5";
 import { MdOutlineClose } from "react-icons/md";
-import { useContext, useEffect } from "react";
 import { AuthContext } from "../Providers/AuthContext";
 
 const Chat = () => {
@@ -22,6 +22,12 @@ const Chat = () => {
     storedAutoMessage,
     setStoredAutoMessage,
   } = useContext(AuthContext);
+
+  const inputRef = useRef();
+
+  const handleFocus = () => {
+    inputRef.current.focus();
+  };
 
   useEffect(() => {
     handleGetMessage();
@@ -95,6 +101,7 @@ const Chat = () => {
             {error && <div>{error}</div>}
             <input
               value={inputValue}
+              ref={inputRef}
               placeholder="Type a message..."
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={(e) => {
@@ -105,7 +112,10 @@ const Chat = () => {
               className="w-[500px] h-[50px] bg-gray-800 rounded-2xl text-white text-lg outline-none pl-4 pr-12 shadow-[0_2px_13px_rgba(159,90,253,1)]"
             />
             <IoSendSharp
-              onClick={handlePostMessage}
+              onClick={() => {
+                handlePostMessage();
+                handleFocus();
+              }}
               className="absolute text-white text-2xl top-1/2 -translate-y-1/2 left-135 cursor-pointer hover:scale-120 duration-200 hover:text-purple-700"
             />
           </div>
