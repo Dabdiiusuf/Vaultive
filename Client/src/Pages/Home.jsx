@@ -10,7 +10,6 @@ import { AuthContext } from "../Providers/AuthContext";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  // const [isOpen, setIsOpen] = useState(false);
   const {
     isFirstOpen,
     isSecondOpen,
@@ -27,13 +26,10 @@ const Home = () => {
   // const handleQuestions = () => {
   //   setIsFirstOpen(...!isFirstOpen);
   // };
-  const handleLocateTop = () => {
-    console.log("hello");
-  };
 
   return (
-    <div className="w-full min-h-screen bg-gray-900">
-      <div className="relative flex flex-col justify-center items-center min-h-screen">
+    <div className="w-full bg-gray-900">
+      <div className="relative flex flex-col justify-center min-h-screen items-center">
         <div className="absolute inset-0 z-0 grid grid-cols-5 grid-rows-5">
           {Array.from({ length: 25 }).map((_, i) => (
             <div
@@ -42,7 +38,7 @@ const Home = () => {
             ></div>
           ))}
         </div>
-        <div className="w-[80%] h-full flex justify-between items-center mb-10">
+        <div className="w-[80%] flex justify-between items-center mb-10">
           <Lottie
             animationData={animationData}
             loop={true}
@@ -61,7 +57,6 @@ const Home = () => {
               Your goals, our support — every step of the way.
             </div>
             <Link
-              onClick={handleLocateTop}
               to="/Register"
               className="flex w-[140px] gap-2 border-2 z-10 items-center border-purple-800 text-white rounded-3xl pl-3 py-2 hover:bg-purple-700"
             >
@@ -71,7 +66,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-col justify-center items-center ">
+      <div className="w-full flex flex-col justify-center items-center">
         <div className="w-[80%]">
           <h1 className="text-white text-5xl font-light font-[Montserrat]">
             Invest Smarter, Grow Faster

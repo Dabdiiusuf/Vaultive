@@ -184,9 +184,11 @@ const Register = () => {
         </div>
         <div className="w-[50%] h-full absolute right-0 bg-gray-200 rounded-r-4xl">
           <div className="mx-auto mt-10 text-center">
-            <h1 className="text-3xl font-bold text-gray-700 mb-1">
-              Welcome: "{username}"
-            </h1>
+            {username && username.length > 0 && (
+              <h1 className="text-3xl font-bold text-gray-700 mb-1">
+                Welcome: "{username}"
+              </h1>
+            )}
             <p className="text-sm">Register your account:</p>
             <p className="text-lg text-green-600">{success}</p>
             <p className="text-lg text-red-600">{error}</p>

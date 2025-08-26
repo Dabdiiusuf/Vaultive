@@ -17,6 +17,9 @@ const AuthContextProvider = ({ children }) => {
   const [success, setSuccess] = useState("");
   const [getMessages, setGetMessages] = useState("");
   const [postMessage, setPostMessage] = useState("");
+  const autoMessages = ["Hello", "I'm good, thank you! How are you?", "Okay."];
+  const [storedAutoMessage, setStoredAutoMessage] = useState([]);
+  const [index, setIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -90,9 +93,9 @@ const AuthContextProvider = ({ children }) => {
   };
 
   //DELETE MESSAGE
-  const handleDelete = (msgID) => {
+  const handleDelete = async (msgID) => {
     try {
-      const res = fetch(
+      const res = await fetch(
         `https://chatify-api.up.railway.app/messages/${msgID}`,
         {
           method: "DELETE",
@@ -135,6 +138,9 @@ const AuthContextProvider = ({ children }) => {
         getMessages,
         inputValue,
         postMessage,
+        autoMessages,
+        storedAutoMessage,
+        index,
         setUsername,
         setPassword,
         setEmail,
@@ -158,6 +164,8 @@ const AuthContextProvider = ({ children }) => {
         setInputValue,
         setPostMessage,
         handleDelete,
+        setStoredAutoMessage,
+        setIndex,
       }}
     >
       {children}

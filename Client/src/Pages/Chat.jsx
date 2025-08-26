@@ -16,6 +16,11 @@ const Chat = () => {
     postMessage,
     getMessages,
     handleDelete,
+    autoMessages,
+    index,
+    setIndex,
+    storedAutoMessage,
+    setStoredAutoMessage,
   } = useContext(AuthContext);
 
   useEffect(() => {
@@ -25,6 +30,12 @@ const Chat = () => {
   useEffect(() => {
     if (postMessage) {
       setGetMessages([...getMessages, postMessage]);
+
+      setTimeout(() => {
+        const nextAnswer = autoMessages[index];
+        setStoredAutoMessage((prev) => [...prev, nextAnswer]);
+        setIndex((prev) => prev + 1);
+      }, 1000);
     }
   }, [postMessage]);
 
@@ -54,12 +65,14 @@ const Chat = () => {
         <div className="text-white w-[80%] flex flex-col items-center">
           <div className="h-[80%] w-full flex justify-around overflow-scroll py-5">
             <div className="flex flex-col gap-5">
-              <div className="inline-block max-h-max bg-gray-800 rounded-2xl text-white p-4 shadow-[0_2px_13px_rgba(159,90,253,1)]">
-                hello
-              </div>
-              <div className="inline-block max-h-max bg-gray-800 rounded-2xl text-white p-4 shadow-[0_2px_13px_rgba(159,90,253,1)]">
-                hI
-              </div>
+              {postMessage &&
+                storedAutoMessage.map((auto, index) => (
+                  <div key={index}>
+                    <div className="relative inline-block max-w-max max-h-max bg-gray-800 rounded-2xl text-white p-5 shadow-[0_2px_13px_rgba(159,90,253,1)]">
+                      {auto}
+                    </div>
+                  </div>
+                ))}
             </div>
             <div className="flex flex-col gap-5">
               {getMessages &&
@@ -82,6 +95,7 @@ const Chat = () => {
             {error && <div>{error}</div>}
             <input
               value={inputValue}
+              placeholder="Type a message..."
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && inputValue.length > 0)
