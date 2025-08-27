@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 const AuthContext = createContext(undefined);
 
@@ -17,10 +17,10 @@ const AuthContextProvider = ({ children }) => {
   const [success, setSuccess] = useState("");
   const [getMessages, setGetMessages] = useState("");
   const [postMessage, setPostMessage] = useState("");
-  const autoMessages = ["Hello", "I'm good, thank you! How are you?", "Okay."];
   const [storedAutoMessage, setStoredAutoMessage] = useState([]);
   const [index, setIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
+  const [deletedMessageId, setDeletedMessageId] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstOpen, setIsFirstOpen] = useState(false);
@@ -28,6 +28,7 @@ const AuthContextProvider = ({ children }) => {
   const [isThirdOpen, setIsThirdOpen] = useState(false);
   const [isFourthOpen, setIsFourthOpen] = useState(false);
   const [isFifthOpen, setIsFifthOpen] = useState(false);
+  const autoMessages = ["Hello", "I'm good, thank you! How are you?", "Okay."];
 
   //GET MESSAGE
   const handleGetMessage = async () => {
@@ -61,8 +62,11 @@ const AuthContextProvider = ({ children }) => {
 
   //POST MESSAGE
   const handlePostMessage = async () => {
-    if (inputValue.trim() && inputValue === "") {
+    if (!inputValue.trim() && inputValue === "") {
       setError("can not send empty messages!");
+    }
+    if (inputValue !== "") {
+      setError("");
     }
 
     try {
@@ -109,6 +113,7 @@ const AuthContextProvider = ({ children }) => {
         throw new Error(`Failed to delete message: ${res.status}`);
       }
 
+      setDeletedMessageId(msgID);
       console.log("Message deleted");
     } catch (err) {
       console.error(err);
@@ -141,6 +146,7 @@ const AuthContextProvider = ({ children }) => {
         autoMessages,
         storedAutoMessage,
         index,
+        deletedMessageId,
         setUsername,
         setPassword,
         setEmail,
@@ -162,7 +168,6 @@ const AuthContextProvider = ({ children }) => {
         handleGetMessage,
         handlePostMessage,
         setInputValue,
-        setPostMessage,
         handleDelete,
         setStoredAutoMessage,
         setIndex,

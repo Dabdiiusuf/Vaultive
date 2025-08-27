@@ -12,7 +12,6 @@ const Chat = () => {
     inputValue,
     setInputValue,
     setGetMessages,
-    setPostMessage,
     postMessage,
     getMessages,
     handleDelete,
@@ -21,6 +20,7 @@ const Chat = () => {
     setIndex,
     storedAutoMessage,
     setStoredAutoMessage,
+    deletedMessageId,
   } = useContext(AuthContext);
 
   const inputRef = useRef();
@@ -32,6 +32,12 @@ const Chat = () => {
   useEffect(() => {
     handleGetMessage();
   }, []);
+
+  useEffect(() => {
+    if (deletedMessageId) {
+      setGetMessages(getMessages.filter((gm) => gm.id !== deletedMessageId));
+    }
+  }, [deletedMessageId]);
 
   useEffect(() => {
     if (postMessage) {
@@ -67,7 +73,6 @@ const Chat = () => {
             </div>
           )}
         </div>
-
         <div className="text-white w-[80%] flex flex-col items-center">
           <div className="h-[80%] w-full flex justify-around overflow-scroll py-5">
             <div className="flex flex-col gap-5">
