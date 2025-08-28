@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import { IoSendSharp } from "react-icons/io5";
 import { MdOutlineClose } from "react-icons/md";
-import { AuthContext } from "../Providers/AuthContext";
+import { GlobalContext } from "../Providers/GlobalContextontext";
 
 const Chat = () => {
   const {
@@ -21,7 +21,7 @@ const Chat = () => {
     storedAutoMessage,
     setStoredAutoMessage,
     deletedMessageId,
-  } = useContext(AuthContext);
+  } = useContext(GlobalContext);
 
   const inputRef = useRef();
 

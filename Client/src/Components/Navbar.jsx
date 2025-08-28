@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { SiVaultwarden } from "react-icons/si";
-import { AuthContext } from "../Providers/AuthContext";
+import { GlobalContext } from "../Providers/GlobalContextontext";
 import { useContext } from "react";
 
 const Navbar = () => {
-  const { authToken, setAuthToken } = useContext(AuthContext);
+  const { authToken, setAuthToken } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {

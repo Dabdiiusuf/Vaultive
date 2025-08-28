@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import Lottie from "lottie-react";
 import animationData from "../Assets/Animation - 1750006662856 (1).json";
 import { MdArrowOutward } from "react-icons/md";
@@ -6,7 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { RiStockLine } from "react-icons/ri";
 import { RiTeamFill } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa6";
-import { AuthContext } from "../Providers/AuthContext";
+import { GlobalContext } from "../Providers/GlobalContextontext";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -21,7 +21,7 @@ const Home = () => {
     setIsThirdOpen,
     setIsFourthOpen,
     setIsFifthOpen,
-  } = useContext(AuthContext);
+  } = useContext(GlobalContext);
 
   // const handleQuestions = () => {
   //   setIsFirstOpen(...!isFirstOpen);

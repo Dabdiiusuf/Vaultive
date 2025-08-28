@@ -5,16 +5,16 @@ import MyProfile from "../Pages/MyProfile";
 import Chat from "../Pages/Chat";
 import NotFound from "../Pages/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
-import { AuthContextProvider } from "../Providers/AuthContext";
-import Login from "./Login";
-import Register from "./Register";
+import { GlobalContextProvider } from "../Providers/GlobalContextontext";
+import Login from "../Pages/Login";
+import Register from "../Pages/Register";
 import Footer from "./Footer";
 import TermsOfUse from "../Pages/TermsOfUse";
 import PrivacyPolicy from "../Pages/PrivacyPolicy";
 
 function App() {
   return (
-    <AuthContextProvider>
+    <GlobalContextProvider>
       <div className="w-screen h-screen overflow-x-hidden bg-gray-900">
         <Router>
           <Navbar />
@@ -33,7 +33,7 @@ function App() {
           <Footer />
         </Router>
       </div>
-    </AuthContextProvider>
+    </GlobalContextProvider>
   );
 }
 

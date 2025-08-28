@@ -1,8 +1,8 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
-const AuthContext = createContext(undefined);
+const GlobalContext = createContext(null);
 
-const AuthContextProvider = ({ children }) => {
+const GlobalContextProvider = ({ children }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -12,7 +12,6 @@ const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("decodedJwt")) // TODO: se över detta, men du vill ha decodedJwt i localStorage (gärna sessionStorage)
   );
   const [authToken, setAuthToken] = useState(localStorage.getItem("jwt"));
-  const [response, setResponse] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [getMessages, setGetMessages] = useState("");
@@ -21,7 +20,6 @@ const AuthContextProvider = ({ children }) => {
   const [index, setIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [deletedMessageId, setDeletedMessageId] = useState(null);
-  const [isActive, setIsActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstOpen, setIsFirstOpen] = useState(false);
   const [isSecondOpen, setIsSecondOpen] = useState(false);
@@ -121,17 +119,15 @@ const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
+    <GlobalContext.Provider
       value={{
         username,
         password,
         email,
         avatar,
-        response,
         error,
         success,
         csrfToken,
-        isActive,
         isLoading,
         isFirstOpen,
         isSecondOpen,
@@ -151,11 +147,9 @@ const AuthContextProvider = ({ children }) => {
         setPassword,
         setEmail,
         setAvatar,
-        setResponse,
         setError,
         setSuccess,
         setCsrfToken,
-        setIsActive,
         setIsLoading,
         setIsFirstOpen,
         setIsSecondOpen,
@@ -174,8 +168,8 @@ const AuthContextProvider = ({ children }) => {
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </GlobalContext.Provider>
   );
 };
 
-export { AuthContext, AuthContextProvider };
+export { GlobalContext, GlobalContextProvider };

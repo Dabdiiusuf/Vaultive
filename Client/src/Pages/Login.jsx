@@ -1,5 +1,5 @@
-import { useState, useContext, useEffect } from "react";
-import { AuthContext } from "../Providers/AuthContext";
+import { useContext, useEffect } from "react";
+import { GlobalContext } from "../Providers/GlobalContextontext";
 import Lottie from "lottie-react";
 import animationData from "../Assets/Animation - 1750006662856 (1).json";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ const Login = () => {
     setAuthToken,
     setIsLoading,
     setSuccess,
-  } = useContext(AuthContext);
+  } = useContext(GlobalContext);
 
   let navigate = useNavigate();
 

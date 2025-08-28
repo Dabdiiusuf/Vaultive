@@ -5,6 +5,7 @@ import { FaGithubSquare } from "react-icons/fa";
 
 const Footer = () => {
   const d = new Date().getFullYear();
+
   return (
     <div className="bg-gray-900 w-full h-[220px] flex text-white justify-evenly border-t-1 border-gray-800">
       <ul className="border-r-1 w-full border-gray-800 h-full block relative">
