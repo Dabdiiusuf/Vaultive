@@ -23,10 +23,6 @@ const Home = () => {
     setIsFifthOpen,
   } = useContext(GlobalContext);
 
-  // const handleQuestions = () => {
-  //   setIsFirstOpen(...!isFirstOpen);
-  // };
-
   return (
     <div className="w-full bg-gray-900">
       <div className="relative flex flex-col justify-center min-h-screen items-center">
